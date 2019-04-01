@@ -32,7 +32,7 @@ int calc_time_ms(struct timeval time_init, struct timeval time_finish){
     return (int) (1000 * (time_finish.tv_sec - time_init.tv_sec) + (time_finish.tv_usec - time_init.tv_usec) / 1000.0);
 }
 
-bool verify_if_pressed(BlackGPIO button){
+bool verify_if_pressed(BlackGPIO button, BlackGPIO led){
     // retorna verdadeiro se o botão foi pressionado 
     /* Obs.: Lembrar de acender a luz no memento q o botão for pressionado 
     e de colocar um 'loop' para esperar o botão parar de ser pressionado */
@@ -95,7 +95,7 @@ int main(){
         printf("Informe seu nome: ")
         scanf("%s", name);
         printf("Informe o nível de dificuldade (1 => facil, 2 => medio e 3 => dificil): ");
-        do{ scanf("%d", &dificult) }while(dificult > 3 || dificult <1);
+        do{ scanf("%d", &dificult) }while(dificult > 3 || dificult < 1);
 
         printf("Start in 3 seconds ...")
         sleep(3)
@@ -123,14 +123,14 @@ int main(){
             // pegando a sequencia do jogador
             real_time_of_player = 0; // [T] = ms
             cont_sequence_number = 0;
-            while(time_to_answer >= real_time_of_player/1000.0){
+            while(time_to_answer >= real_time_of_player/1000.0 || cont_sequence_number >= dificult*5){
                 gettimeofday(&time_init, NULL);
                 /* lembrar de enviar os leds para serem acionados */
-                if(verify_if_pressed(redButton)){
+                if(verify_if_pressed(redButton, redLed)){
                     real_sequence[cont_sequence_number++] = 0; //  red
-                }else if(verify_if_pressed(greenButton)){
+                }else if(verify_if_pressed(greenButton, greenLed)){
                     real_sequence[cont_sequence_number++] = 1; // green
-                }else if(verify_if_pressed(blueButton)){
+                }else if(verify_if_pressed(blueButton, blueLed)){
                     real_sequence[cont_sequence_number++] = 2; // blue
                 }else{
                     real_sequence[cont_sequence_number++] = -1; // não apertou o botão
@@ -139,7 +139,10 @@ int main(){
                 real_time_of_player += calc_time_ms(time_init, time_finish); // acrescenta tempo de resposta
             }
 
+            if(verify_hit(real_sequence, correct_sequence, dificult*5))
+            	set_display(displayLed, ++score);
         }
+        (score == 10) ? printf("Parabens!!\n", ) : printf("Tente novamente, nao foi dessa vez!\n");
     }
 	return 0;
 }
