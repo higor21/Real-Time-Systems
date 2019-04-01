@@ -52,10 +52,3 @@ int main(){
 	return 0;
 }
 
-/*
-	Escrita em pino digital
-	Leitura em pino digital
-	Uso de pino PWM 
-	Uso de pino ADC
-	Log dos estados de cada pino
-*/
