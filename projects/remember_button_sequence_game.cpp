@@ -95,7 +95,7 @@ int main(){
         printf("Informe seu nome: ")
         scanf("%s", name);
         printf("Informe o nível de dificuldade (1 => facil, 2 => medio e 3 => dificil): ");
-        do{ scanf("%d", &dificult) while(dificult > 3 || dificult <1);
+        do{ scanf("%d", &dificult) }while(dificult > 3 || dificult <1);
 
         printf("Start in 3 seconds ...")
         sleep(3)
@@ -140,33 +140,6 @@ int main(){
             }
 
         }
-
-		if(strcmp(pushbutton.getValue().c_str(),"0")){
-			redLed.setValue(low);
-			greenLed.setValue(low);
-		}else{
-			redLed.setValue(high);
-			greenLed.setValue(low);
-			
-			// espera um tempo aleatório
-			time_to_wait = (rand()%5 + 3); // número aleatório entre 3 e 7
-			sleep(time_to_wait);
-
-			redLed.setValue(low);
-			greenLed.setValue(high);
-		
-			// tempo de reação	
-			gettimeofday(&time_init, NULL);
-			while(!strcmp(pushbutton.getValue().c_str(),"0")){}
-			gettimeofday(&time_finish, NULL);
-
-			dT = (int) (1000 * (time_finish.tv_sec - time_init.tv_sec) + (time_finish.tv_usec - time_init.tv_usec) / 1000.0);
-			if(dT > 10)
-				printf("Tempo de reacao: %d milissegundos\n", dT);
-			else
-				printf("Erro: voce acionou o sistema antes do tempo previsto\n");
-		}
-	}
-
+    }
 	return 0;
 }
