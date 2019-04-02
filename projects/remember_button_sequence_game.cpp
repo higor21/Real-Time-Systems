@@ -16,12 +16,48 @@
 using namespace BlackLib;
 	
 // change the display to show the number 'number'
-void set_display(std::vector<BlackGPIO> &display, unsigned int number){
+void set_display(std::vector<BlackGPIO> &display_obj, unsigned int number){
+	vector<int> display;
 
-}
+    switch(number) {
 
-void show_to_user(){
+        case 0:
+            display = {1, 1, 1, 1, 1, 1, 0, 0};
+            break;
+        case 1:
+            display = {0, 1, 1, 0, 0, 0, 0, 0};
+            break;
+        case 2:
+            display = {1, 1, 0, 1, 1, 0, 1, 0};
+            break;
+        case 3:
+            display = {1, 1, 1, 1, 0, 0, 1, 0};
+            break;
+        case 4:
+            display = {0, 1, 1, 0, 0, 1, 1, 0};
+            break;
+        case 5:
+            display = {1, 0, 1, 1, 0, 1, 1, 0};
+            break;
+        case 6:
+            display = {1, 0, 1, 1, 1, 1, 1, 0};
+            break;
+        case 7:
+            display = {1, 1, 1, 0, 0, 0, 0, 0};
+            break;
+        case 8:
+            display = {1, 1, 1, 1, 1, 1, 1, 0};
+            break;
+        case 9:
+            display = {1, 1, 1, 1, 0, 1, 1, 0};
+            break;
+        default:         
+        	display = {0, 0, 0, 0, 0, 0, 0, 1};
+    }	
 
+    for (int i = 0; i < NUM_LEDS_DISPLAY; ++i){
+    	display_obj[i].setValue((display[i]) ? high : low);
+    }
 }
 
 void set_leds(std::vector<BlackGPIO> leds, int led /* 0, 1, 2 ou -1*/){
@@ -46,8 +82,10 @@ bool verify_if_pressed(BlackGPIO button, BlackGPIO led){
 }
 
 void initialize_gpio(std::vector<BlackGPIO> itens, int ports[], int n_ports, char c){
-    for(int i=0; i<n_ports; i++)
+    for(int i=0; i<n_ports; i++){
+    	printf("%d ** %d\n", i, ports[i]);
     	itens.push_back(BlackGPIO((gpioName)ports[i], (c == 'i') ? input : output));
+    }
 }
 
 bool verify_hit(int r_vet[], int c_vet[], int t){
@@ -68,8 +106,8 @@ int main(){
 	analogLed.setPeriod(period_pwm);
 
     int display_ports[] = {GPIO_38, GPIO_39, GPIO_34, GPIO_35, GPIO_66, GPIO_67, GPIO_68, GPIO_69};
-    int input_ports[] = {GPIO_71, GPIO_73, GPIO_75};
-    int output_ports[] = {GPIO_70, GPIO_72, GPIO_74};
+    int input_ports[] = {GPIO_38, GPIO_39, GPIO_67};
+    int output_ports[] = {GPIO_63, GPIO_65, GPIO_46};
 	
     // display
     std::vector<BlackGPIO> displayLed;
@@ -78,18 +116,10 @@ int main(){
     // leds
     std::vector<BlackGPIO> leds;
 
+    buttons.resize(NUM_BUTTONS);
 	initialize_gpio(buttons, input_ports, NUM_BUTTONS, 'i');
 	initialize_gpio(leds, output_ports, NUM_LEDS, 'o');
-	initialize_gpio(displayLed, display_ports, NUM_LEDS_DISPLAY, 'o');
-
-    /* 	BlackGPIO displayLed_a(GPIO_38, output); // a
-	BlackGPIO displayLed_b(GPIO_39, output); // b
-	BlackGPIO displayLed_c(GPIO_34, output); // c
-	BlackGPIO displayLed_d(GPIO_35, output); // d
-	BlackGPIO displayLed_e(GPIO_66, output); // e
-	BlackGPIO displayLed_f(GPIO_67, output); // f
-	BlackGPIO displayLed_g(GPIO_68, output); // g
-	BlackGPIO displayLed_dp(GPIO_69, output); // DP */
+	//initialize_gpio(displayLed, display_ports, NUM_LEDS_DISPLAY, 'o');
 
     // user informations
     unsigned int score = 4;
@@ -102,7 +132,7 @@ int main(){
     int correct_sequence[15]; // 0, 1, 2 ou -1 (todas apagadas)
     int real_sequence[15]; // 0, 1, 2 ou -1 (todas apagadas)
     int current_led;
-
+    
 	struct timeval time_init, time_finish;
     int real_time_of_player;
 	int cont_sequence_number;
