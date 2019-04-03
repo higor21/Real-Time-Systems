@@ -81,10 +81,11 @@ bool verify_if_pressed(BlackGPIO button, BlackGPIO led){
     return false;
 }
 
-void initialize_gpio(std::vector<BlackGPIO> itens, int ports[], int n_ports, char c){
+void initialize_gpio(/*std::vector<BlackGPIO> itens*/BlackGPIO itens[], int ports[], int n_ports, char c){
     for(int i=0; i<n_ports; i++){
     	printf("%d ** %d\n", i, ports[i]);
-    	itens.push_back(BlackGPIO((gpioName)ports[i], (c == 'i') ? input : output));
+    	itens[i] = BlackGPIO((gpioName)ports[i], (c == 'i') ? input : output);
+    	//itens.push_back(BlackGPIO((gpioName)ports[i], (c == 'i') ? input : output));
     }
 }
 
@@ -112,13 +113,13 @@ int main(){
     // display
     std::vector<BlackGPIO> displayLed;
 	// buttons
-    std::vector<BlackGPIO> buttons;
+    BlackGPIO buttons[NUM_BUTTONS];
     // leds
     std::vector<BlackGPIO> leds;
 
-    buttons.resize(NUM_BUTTONS);
+    //buttons.resize(NUM_BUTTONS);
 	initialize_gpio(buttons, input_ports, NUM_BUTTONS, 'i');
-	initialize_gpio(leds, output_ports, NUM_LEDS, 'o');
+	//initialize_gpio(leds, output_ports, NUM_LEDS, 'o');
 	//initialize_gpio(displayLed, display_ports, NUM_LEDS_DISPLAY, 'o');
 
     // user informations
