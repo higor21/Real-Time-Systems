@@ -4,9 +4,10 @@
 #include <stdio.h>
 #include <unistd.h>  // sleep()
 #include <cstring>
-#include <sys/time.h>
+//#include <sys/time.h>
 #include <cstdlib> // rand()
 #include <time.h>
+#include <bits/stdc++.h>
 #include <vector>
 #include <iostream>
 
@@ -171,25 +172,26 @@ int main(){
             real_time_of_player = 0; // [T] = ms
             cont_sequence_number = 0;
             while(time_to_answer >= real_time_of_player/1000.0 || cont_sequence_number >= (int) dificult*5){
-				std::cout<<"\ntime: "<<real_time_of_player;
-				time_init = time(NULL);
+				//std::cout<<"\ntime: "<<real_time_of_player;
+				//time_init = time(NULL);
                 //gettimeofday(&time_init, NULL);
+                time(&time_init);
                 //not_pressed = 0;
-                printf("pass 1"); 
+                
                 for (int i = 0; i < NUM_BUTTONS; ++i){
                 	if (verify_if_pressed(buttons[i], leds[i])){
                 		real_sequence[cont_sequence_number++] = i;
                 	}
                 }
                 //if(not_pressed == 3) real_sequence[cont_sequence_number++] = -1;
-                printf("pass 2"); 
+                ios_base::sync_with_stdio(false); 
 
                 //gettimeofday(&time_finish, NULL);
-                time_finish = time(NULL);
-                printf("pass 3"); 
+                //time_finish = time(NULL);
+                time(&time_finish);
                 real_time_of_player += difftime(time_finish,time_init);
                 //real_time_of_player += calc_time_ms(time_init, time_finish); // acrescenta tempo de resposta	    
-                printf("pass 4"); 
+                
             }
 
             if(verify_hit(real_sequence, correct_sequence, (int) dificult*5))
