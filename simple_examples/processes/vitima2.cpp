@@ -18,7 +18,8 @@ int main()
   printf("Vou ficar num loop infinito\n");
     
   while(1);  // loop infinito
-    
+
+  
   exit(0);
 }
 

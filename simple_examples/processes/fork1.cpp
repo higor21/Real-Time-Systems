@@ -32,16 +32,17 @@ int main ()
           sleep(1);
           printf("\n\nSou o processo Filho1 \n");
           //system("ps -axf| grep fork1 &");
+        
         }
         printf("Sou o processo Filho e vou morrer agora - Até la vista baby :( \n");
-        break;
+         break;
       default:       // parte a ser executada pelo processo Pai
         for(i=1;i<5;i++) {
            sleep(1);
            printf("\n\nSou o processo Pai \n");
            //system("ps -axf| grep fork1");
         }
-        printf("Sou o processo Pai e vou morrer agora - Até la vista, baby :( \n");
+            printf("Sou o processo Pai e vou morrer agora - Até la vista, baby :( \n");
    }
       
     exit (0);
