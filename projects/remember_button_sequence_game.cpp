@@ -40,7 +40,7 @@ void set_display(BlackGPIO display_obj[], unsigned int number){
             display = {0, 1, 1, 0, 0, 1, 1, 0};
             break;
         case 5:
-            display = {1, 0, 1, 1, 0, 1, 1, 0};
+            display = {1, 0, 1, 1, 0, 1, 1, 0}; 
             break;
         case 6:
             display = {1, 0, 1, 1, 1, 1, 1, 0};
