@@ -42,12 +42,12 @@ int main() {
     }
     printf("MAIN()--> Esperando pelo término da thread...\n");
   
-    /*res = pthread_join(a_thread, &thread_result);
+    res = pthread_join(a_thread, &thread_result);
     if (res != 0) {
         perror("O thread_join falhou");
         exit(EXIT_FAILURE);
     }
-  */
+  
     sleep(5);
     printf("MAIN()--> O thread_join retornou:   %s\n", (char *)thread_result);
     printf("MAIN()--> Message agora é: %s\n\n", message);

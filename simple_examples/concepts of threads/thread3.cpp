@@ -58,7 +58,7 @@ int main() {
 void *thread_function(void *arg) {
     int print_count2 = 0;
 	
-    while(print_count2++ < 20) {
+    while(true) {
         if (run_now == 2) {
             printf("THREAD --> 2\n");
             run_now = 1;
